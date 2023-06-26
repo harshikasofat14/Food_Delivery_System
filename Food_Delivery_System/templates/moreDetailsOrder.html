@@ -1,0 +1,252 @@
+{% extends 'topBarAdded.html' %}
+
+{% block title %}
+  <title>Offer Details</title>
+  <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/timeline.css')}}>
+  <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='css/stars.css')}}>
+{% endblock %}
+
+{% block topBarButtons %}
+  <a href={{url_for('logout')}} id="anchor-link-nodesign">
+    <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+      <span class="mdc-button__label">Logout</span>
+    </button>
+  </a>
+  <button class="mdc-button" disabled>
+    <span class="mdc-button__ripple"></span>
+    <span class="mdc-button__label"></span>
+  </button>
+{% endblock %}
+
+{% block main %}
+<div class='container-fluid'>
+  <div class='row justify-content-center'>
+    <div class='col-auto align-self-center'>
+      From: {{customerName}}    
+    </div>
+  </div>
+  <div class='row justify-content-center'>
+    <div class='col-auto align-self-center'>
+      To: {{restaurantName}}    
+    </div>
+  </div>
+  {% if not orderList %}
+    <div class='row justify-content-center'>
+      <div class='col-auto align-self-center'>
+        <h1>There are no Order Items in List</h1>
+      </div>
+    </div>
+  {% else %}
+    <div class='row justify-content-center'>
+      <div class='col-auto align-self-center'>
+        <div class="mdc-data-table">
+          <div class="mdc-data-table__table-container">
+            <table class="mdc-data-table__table" aria-label="Dessert calories">
+              <thead>
+                <tr class="mdc-data-table__header-row">
+                  <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Name</th>
+                  <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Price</th>
+                  <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Frequency</th>
+                  <th class="mdc-data-table__header-cell bg-info" role="columnheader" scope="col">Total Price</th>
+                </tr>
+              </thead>
+              <tbody class="mdc-data-table__content">
+                {% for foodItem in orderList %}
+                  <tr class="mdc-data-table__row">
+                    <th class="mdc-data-table__cell" scope="row">{{foodItem['name']}}</th>
+                    <td class="mdc-data-table__cell">{{foodItem['pricePerItem']}}</td>
+                    <td class="mdc-data-table__cell">{{foodItem['frequency']}}</td>
+                    <td class="mdc-data-table__cell">{{foodItem['pricePerItem'] * foodItem['frequency']}}</td>
+                  </tr>
+                {% endfor %} 
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if offerUsed == None %}
+      <div class='row justify-content-center'>
+        <div class='col-auto align-self-center'>
+          <h2>No offer selected yet.</h2>
+        </div>
+      </div>
+    {% else %}
+      <div class='row justify-content-center'>
+        <div class='col-auto align-self-center'>
+          <div class="mdc-data-table">
+            <div class="mdc-data-table__table-container">
+              <table class="mdc-data-table__table" aria-label="Dessert calories">
+                <thead>
+                  <tr class="mdc-data-table__header-row">
+                    <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Name</th>
+                    <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Discount(%)</th>
+                    <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Upper Limit</th>
+                  </tr>
+                </thead>
+                <tbody class="mdc-data-table__content">
+                  <tr class="mdc-data-table__row">
+                    <th class="mdc-data-table__cell" scope="row">{{offerUsed['name']}}</th>
+                    <td class="mdc-data-table__cell">{{offerUsed['discount']}}</td>
+                    <td class="mdc-data-table__cell">{{offerUsed['upperLimit']}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+      <div class='row justify-content-center'>
+        <div class='col-auto align-self-center'>
+          <div class="mdc-data-table">
+            <div class="mdc-data-table__table-container">
+              <table class="mdc-data-table__table" aria-label="Dessert calories">
+                <thead>
+                  <tr class="mdc-data-table__header-row">
+                    <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Base Cost</th>
+                    <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Discount</th>
+                    <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Delivery Charges</th>
+                    <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Total to Pay</th>
+                  </tr>
+                </thead>
+                <tbody class="mdc-data-table__content">
+                  <tr class="mdc-data-table__row">
+                    <th class="mdc-data-table__cell" scope="row">{{cost}}</th>
+                    <td class="mdc-data-table__cell">{{discount}}</td>
+                    <td class="mdc-data-table__cell">{{deliveryCharge}}</td>
+                    <td class="mdc-data-table__cell">{{final}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='row justify-content-center'>
+        <div class='col-auto align-self-center'>
+          <h1>Order Updates</h1>
+        </div>
+      </div>
+  {% endif %}
+</div>
+
+  <div class="container">
+    <div class='row justify-content-center'>
+      <div class='col-auto align-self-center'>
+        <div class="timeline">
+          <div class="timeline__header">
+            <h1>Timeline</h1>
+            <!-- <div class="process">
+             <div class="xd" id={{updateLevel}}></div>
+            </div> -->
+          </div>
+       
+          <div class="line">
+            <div class="line-content">
+              {% if updateLevel >=0 %}
+                <div class="content">
+                  <h1>Order Given</h1>
+                  <p>Order has been sent to the restaurant<br>
+                  Waiting for confirmation</p>
+                </div>
+              {% endif %}
+              
+              {% if updateLevel >=1 %}
+                {% if orderUpdate[0]['heading'] == 'Accepted' %}
+                  <div class="content">
+                    <h1>Order Accepted</h1>
+                    <p>Preparation time: {{ orderUpdate[0]['time'] }}</p>
+                  </div>
+                {% else %}
+                  <div class="content">
+                    <h1>Rejected</h1>
+                    <p>Order has been rejected by the Restaurant</p>
+                  </div>
+                {% endif %}
+              {% endif %}
+
+              {% if updateLevel >=2 %}
+                <div class="content">
+                  <h1>Food Prepared</h1>
+                  <p>Food open for delivery</p>
+                </div>
+              {% endif %}
+
+              {% if updateLevel >=3 %}
+                <div class="content">
+                  <h1>Delivery Accepted</h1>
+                  <p>
+                    Order is accepted by {{ deliveryAgentName }}<br>
+                    Estimated time for pickup: {{orderUpdate[1]['timePickUp']}} min<br>
+                  </p>
+                </div>
+              {% endif %}
+
+              {% if updateLevel >=4 %}
+                <div class="content">
+                  <h1>Out for Delivery</h1>
+                  <p>Estimated Time for Delivery: {{orderUpdate[1]['deliveryTime']}} min</p>
+                </div>
+              {% endif %}
+
+              {% if updateLevel >=5 %}
+                <div class="content">
+                  <h1>Delivered</h1>
+                  <p>Food was Delivered</p>
+                  <!-- Add code for feedback/rating of the restaurant and deliveryAgent -->
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>       
+      </div>
+    </div>
+    {% if updateLevel ==5 %}
+    <form action={{url_for('ratingCustomer')}} method="POST" enctype="multipart/form-data">
+      <div class='row justify-content-center' style="margin-bottom:50px;">
+        <div class='col-3 align-self-center'>
+          <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon text-field-1">
+            <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="0" role="button">star</i>
+            <span class="mdc-notched-outline">
+              <span class="mdc-notched-outline__leading"></span>
+              <span class="mdc-notched-outline__notch">
+                <span class="mdc-floating-label" id="my-label-id">Restaurant Rating</span>
+              </span>
+              <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <input type="number" class="mdc-text-field__input" aria-labelledby="my-label-id" name="restaurantRating" max=5 min=0 required>
+          </label>
+        </div>
+      </div>
+      <div class='row justify-content-center'>
+        <div class='col-3 align-self-center'>
+          <label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon text-field-2">
+            <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="0" role="button">star</i>
+            <span class="mdc-notched-outline">
+              <span class="mdc-notched-outline__leading"></span>
+              <span class="mdc-notched-outline__notch">
+                <span class="mdc-floating-label" id="my-label-id">Delivery Agent Rating</span>
+              </span>
+              <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <input type="number" class="mdc-text-field__input" aria-labelledby="my-label-id" name="deliveryAgentRating" max=5 min=0 required>
+          </label>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-auto align-self-center">
+          <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+            <span class="mdc-button__label">Submit</span>
+          </button>
+        </div>
+      </div>
+    </form>
+    {% endif %}
+  </div>
+
+  <script>
+    const textField = new mdc.textField.MDCTextField(document.querySelector('.mdc-text-field.text-field-1'));
+    const textField1 = new mdc.textField.MDCTextField(document.querySelector('.mdc-text-field.text-field-2'));
+  </script>
+{% endblock %}

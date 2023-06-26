@@ -1,0 +1,80 @@
+{% extends 'topBarAdded.html' %}
+
+{% block title %}
+  <title>Customer</title>
+{% endblock %}
+
+{% block topBarButtons %}
+  <a href={{url_for('logout')}} id="anchor-link-nodesign">
+    <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+      <span class="mdc-button__label">Logout</span>
+    </button>
+  </a>
+  <button class="mdc-button" disabled>
+    <span class="mdc-button__ripple"></span>
+    <span class="mdc-button__label"></span>
+  </button>
+{% endblock %}
+
+{% block main %}
+  <div class='container'>
+    <div class='row justify-content-center'>
+      <div class='col-auto align-self-center'>
+        <h1>Welcome, {{ user['name'] }}</h1>
+      </div>
+    </div>
+    <div class='row justify-content-center'>
+      <div class='col-auto align-self-center'>
+        <h2>Customer</h2>
+      </div>
+    </div>
+    <div class='row justify-content-center'>
+      <div class='col-auto align-self-center'>
+        <a href={{url_for('allRestaurant')}} id='anchor-link-nodesign'>
+          <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+            <span class="mdc-button__label">Order Now</span>
+          </button>
+        </a>
+      </div>
+    </div>
+    <div class='row justify-content-center'>
+      <div class='col-auto align-self-center'>
+        <a href={{url_for('personalData')}} id='anchor-link-nodesign'>
+          <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+            <span class="mdc-button__label">Personal Data</span>
+          </button>
+        </a>
+      </div>
+      <div class='col-auto align-self-center'>
+        <a href={{url_for('recommendedRestaurant')}} id='anchor-link-nodesign'>
+          <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+            <span class="mdc-button__label">Recommended Restaurants</span>
+          </button>
+        </a>
+      </div>
+      <div class='col-auto align-self-center'>
+        <a href={{url_for('allRestaurant')}} id='anchor-link-nodesign'>
+          <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+            <span class="mdc-button__label">All Restaurants</span>
+          </button>
+        </a>
+      </div>
+    </div>
+    <div class='row justify-content-center'>
+      <div class='col-auto align-self-center'>
+        <a href={{url_for( "recentOrderCustomer" )}} id='anchor-link-nodesign'>
+          <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+            <span class="mdc-button__label">Present Orders</span>
+          </button>
+        </a>
+      </div>
+      <div class='col-auto align-self-center'>
+        <a href={{url_for('pastOrder')}} id='anchor-link-nodesign'>
+          <button class="mdc-button mdc-button--raised" name="submit" type="submit">
+            <span class="mdc-button__label">Past Orders</span>
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
